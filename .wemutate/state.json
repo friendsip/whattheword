@@ -1,0 +1,684 @@
+{
+  "wm_version": "1",
+  "project": {
+    "adapter": "js-ts"
+  },
+  "score_history": [
+    {
+      "timestamp": "2026-06-15T18:02:47Z",
+      "run_id": "r_311D458A08",
+      "adapter": "js-ts",
+      "scope": "full",
+      "target": ".",
+      "totals": {
+        "total": 85,
+        "found": 81,
+        "hidden": 4,
+        "uncovered": 0,
+        "timeout": 0,
+        "equivalent": 0,
+        "suppressed": 0,
+        "mutation_score": 0.9529411764705882,
+        "test_strength": 0.9529411764705882,
+        "coverage_signal": 1.0,
+        "error": 0,
+        "by_kind": {
+          "remove_call": {
+            "total": 7,
+            "found": 6,
+            "hidden": 1,
+            "uncovered": 0
+          },
+          "extreme": {
+            "total": 11,
+            "found": 11,
+            "hidden": 0,
+            "uncovered": 0
+          },
+          "arithmetic": {
+            "total": 9,
+            "found": 8,
+            "hidden": 1,
+            "uncovered": 0
+          },
+          "remove_conditional": {
+            "total": 23,
+            "found": 22,
+            "hidden": 1,
+            "uncovered": 0
+          },
+          "logical": {
+            "total": 8,
+            "found": 8,
+            "hidden": 0,
+            "uncovered": 0
+          },
+          "negate_conditional": {
+            "total": 6,
+            "found": 6,
+            "hidden": 0,
+            "uncovered": 0
+          },
+          "constant": {
+            "total": 13,
+            "found": 13,
+            "hidden": 0,
+            "uncovered": 0
+          },
+          "other": {
+            "total": 4,
+            "found": 3,
+            "hidden": 1,
+            "uncovered": 0
+          },
+          "collection": {
+            "total": 3,
+            "found": 3,
+            "hidden": 0,
+            "uncovered": 0
+          },
+          "null_handling": {
+            "total": 1,
+            "found": 1,
+            "hidden": 0,
+            "uncovered": 0
+          }
+        },
+        "security": {
+          "tagged": 5,
+          "open": 0,
+          "covered_ratio": 1.0
+        }
+      },
+      "hidden_wmids": [
+        "m_3e1588f1d8aa9fa7",
+        "m_402047a46b4b00d4",
+        "m_59eb319e0faa8f96",
+        "m_abb9c8fe331f01bf"
+      ],
+      "loc": 2065
+    },
+    {
+      "timestamp": "2026-06-15T18:04:43Z",
+      "run_id": "r_8C1990B481",
+      "adapter": "js-ts",
+      "scope": "full",
+      "target": ".",
+      "totals": {
+        "total": 85,
+        "found": 85,
+        "hidden": 0,
+        "uncovered": 0,
+        "timeout": 0,
+        "equivalent": 0,
+        "suppressed": 0,
+        "mutation_score": 1.0,
+        "test_strength": 1.0,
+        "coverage_signal": 1.0,
+        "error": 0,
+        "by_kind": {
+          "remove_call": {
+            "total": 7,
+            "found": 7,
+            "hidden": 0,
+            "uncovered": 0
+          },
+          "extreme": {
+            "total": 11,
+            "found": 11,
+            "hidden": 0,
+            "uncovered": 0
+          },
+          "arithmetic": {
+            "total": 9,
+            "found": 9,
+            "hidden": 0,
+            "uncovered": 0
+          },
+          "remove_conditional": {
+            "total": 23,
+            "found": 23,
+            "hidden": 0,
+            "uncovered": 0
+          },
+          "logical": {
+            "total": 8,
+            "found": 8,
+            "hidden": 0,
+            "uncovered": 0
+          },
+          "negate_conditional": {
+            "total": 6,
+            "found": 6,
+            "hidden": 0,
+            "uncovered": 0
+          },
+          "constant": {
+            "total": 13,
+            "found": 13,
+            "hidden": 0,
+            "uncovered": 0
+          },
+          "other": {
+            "total": 4,
+            "found": 4,
+            "hidden": 0,
+            "uncovered": 0
+          },
+          "collection": {
+            "total": 3,
+            "found": 3,
+            "hidden": 0,
+            "uncovered": 0
+          },
+          "null_handling": {
+            "total": 1,
+            "found": 1,
+            "hidden": 0,
+            "uncovered": 0
+          }
+        },
+        "security": {
+          "tagged": 5,
+          "open": 0,
+          "covered_ratio": 1.0
+        }
+      },
+      "hidden_wmids": [],
+      "loc": 2065
+    },
+    {
+      "timestamp": "2026-06-15T18:47:11Z",
+      "run_id": "r_983D66B782",
+      "adapter": "js-ts",
+      "scope": "full",
+      "target": "api+game",
+      "totals": {
+        "total": 404,
+        "found": 260,
+        "hidden": 99,
+        "uncovered": 45,
+        "timeout": 0,
+        "equivalent": 0,
+        "suppressed": 0,
+        "mutation_score": 0.6435643564356436,
+        "test_strength": 0.724233983286908,
+        "coverage_signal": 0.8886138613861386,
+        "error": 0,
+        "by_kind": {
+          "extreme": {
+            "total": 49,
+            "found": 35,
+            "hidden": 1,
+            "uncovered": 13
+          },
+          "collection": {
+            "total": 48,
+            "found": 19,
+            "hidden": 11,
+            "uncovered": 18
+          },
+          "string": {
+            "total": 34,
+            "found": 11,
+            "hidden": 9,
+            "uncovered": 14
+          },
+          "remove_conditional": {
+            "total": 111,
+            "found": 76,
+            "hidden": 35,
+            "uncovered": 0
+          },
+          "negate_conditional": {
+            "total": 25,
+            "found": 21,
+            "hidden": 4,
+            "uncovered": 0
+          },
+          "constant": {
+            "total": 54,
+            "found": 37,
+            "hidden": 17,
+            "uncovered": 0
+          },
+          "other": {
+            "total": 17,
+            "found": 13,
+            "hidden": 4,
+            "uncovered": 0
+          },
+          "logical": {
+            "total": 27,
+            "found": 16,
+            "hidden": 11,
+            "uncovered": 0
+          },
+          "arithmetic": {
+            "total": 13,
+            "found": 13,
+            "hidden": 0,
+            "uncovered": 0
+          },
+          "remove_call": {
+            "total": 24,
+            "found": 18,
+            "hidden": 6,
+            "uncovered": 0
+          },
+          "null_handling": {
+            "total": 1,
+            "found": 1,
+            "hidden": 0,
+            "uncovered": 0
+          },
+          "unary": {
+            "total": 1,
+            "found": 0,
+            "hidden": 1,
+            "uncovered": 0
+          }
+        },
+        "security": {
+          "tagged": 12,
+          "open": 2,
+          "covered_ratio": 0.8333
+        }
+      },
+      "hidden_wmids": [
+        "m_05a62daae1b1d396",
+        "m_05d23d94836b82df",
+        "m_073176ef1d4cfd2d",
+        "m_09f9e6407a8a5132",
+        "m_0c3f595fd4a4fc23",
+        "m_1510b7c5f276450d",
+        "m_15dd40add9b21689",
+        "m_16cdaba6238c9399",
+        "m_1792353288bc6bca",
+        "m_189c1cc3211a0e55",
+        "m_1b1cf29aa1881cba",
+        "m_1c79af41675deda8",
+        "m_1ff112768e8f2674",
+        "m_200b8322f313fb15",
+        "m_2176cb097e358215",
+        "m_232462d90346beba",
+        "m_2407e7d978f36575",
+        "m_24aa20abe8fe5bd3",
+        "m_28f46cce2d3af3c6",
+        "m_298a756eef4372b1",
+        "m_2a071d427f1159f8",
+        "m_2acae90622ca8c28",
+        "m_2cb0dab284bdb04f",
+        "m_2cca84537e6db0ea",
+        "m_2d8514b5e3a97958",
+        "m_2ed018db4430ef11",
+        "m_2f4ef7a85051fa13",
+        "m_30efd366d19f5616",
+        "m_30f060c9fad66505",
+        "m_355b5db538c77e52",
+        "m_3965f7cba6dc7a16",
+        "m_39bab8413635d6d0",
+        "m_3a547e4f7609e09e",
+        "m_3a5684da81d9e6ee",
+        "m_3b01a049569dffe0",
+        "m_3b2fa42847cc8b1f",
+        "m_409f8cb20ad5b8f4",
+        "m_419846d7b2d61376",
+        "m_46ce64c3bf1a068b",
+        "m_492827d9aa8c21af",
+        "m_4953a742f8c264d8",
+        "m_4a2e74ec5310f576",
+        "m_4c8ff7769923d67b",
+        "m_4e86883e6366dfb2",
+        "m_51e686a55969f856",
+        "m_52c167cceb4de08f",
+        "m_54e144563a29231e",
+        "m_568f49f05c30a382",
+        "m_5775e295e2cec3eb",
+        "m_57b9e644e12c0c10",
+        "m_5bc8b5e5db70ca38",
+        "m_5e68e60f313053cf",
+        "m_5ed24d59c4a78156",
+        "m_63546ed7e384aaba",
+        "m_63778582809174f6",
+        "m_66a00e663fbf9215",
+        "m_6b38e1756654e654",
+        "m_6ec69bfa4ed72e56",
+        "m_6f2e08577cdd8da6",
+        "m_6f98166162353b35",
+        "m_716d1ff306185625",
+        "m_724c84291c896e50",
+        "m_74f950bd1f91dd32",
+        "m_759a0d24549675c9",
+        "m_760037814b6bf241",
+        "m_7696879f1c92f4e4",
+        "m_7723ef9f3ef10c62",
+        "m_776c2d7153930eae",
+        "m_77a843e946baf679",
+        "m_78126b63325b8a50",
+        "m_79e5bee6b95af6e9",
+        "m_7a3470eee0a900fa",
+        "m_7a916de09c11f2c7",
+        "m_7c011c2bec996552",
+        "m_7e004114dc6fde16",
+        "m_80529e3a49d938f6",
+        "m_809ea26a2e5b2b7b",
+        "m_83e87150736f81b1",
+        "m_8741a9ca58601822",
+        "m_87fbfaa1bac979d2",
+        "m_884384c5a49ca823",
+        "m_89a833ce34bf9371",
+        "m_8d91a0e1b5ec8e1f",
+        "m_8e593dea7e535ff5",
+        "m_8e801ce506654cd0",
+        "m_93c42d880ddca49c",
+        "m_94b53af739f85d2f",
+        "m_95b4672bc3fa0cac",
+        "m_95e73a1973a1be22",
+        "m_97150eddf818b165",
+        "m_990154236cb3f773",
+        "m_99b2cd5b05f81e92",
+        "m_9a0c34d4b2e77f1a",
+        "m_9b9180b92fdffcaf",
+        "m_9c6d4f6a3f4dd6e3",
+        "m_9f1483d8ece004ca",
+        "m_a3ae9b9136ce4f7a",
+        "m_a3fbbd182842d874",
+        "m_a61038472aaaac20",
+        "m_a733d15aaeaee5ef",
+        "m_a845357a58143cf9",
+        "m_a880708ee5b77e4b",
+        "m_a9b70f3106d18a11",
+        "m_aa8fa95a9b6a0283",
+        "m_ab404d0d253888c8",
+        "m_abaceaa3f3a32219",
+        "m_ac891181c3a7aac2",
+        "m_aed5db1699666e99",
+        "m_afbe80e846a14a84",
+        "m_b1f1f2faa1b6ac80",
+        "m_b2766450e289c15f",
+        "m_b31335591bfec0a6",
+        "m_b43244937870acf7",
+        "m_b4aa5720e4854dd8",
+        "m_b66d8165649c7092",
+        "m_b742d066700a9f6f",
+        "m_bca8ce4cbd0d9868",
+        "m_bedeeae14d7b48c2",
+        "m_bf4df33ebda42d72",
+        "m_c18c08724f6674d1",
+        "m_c26b980af19f97a4",
+        "m_c33edf56d98d3e47",
+        "m_c37c091514dfba36",
+        "m_c3fc0d72dc6fbe89",
+        "m_c68f8dcf01df1efb",
+        "m_c778caa56b9d86ef",
+        "m_c818b6a082c63019",
+        "m_d0cb0a3a9e90bd14",
+        "m_d2a12d92b0768e65",
+        "m_d43d6c95b8dcd3c3",
+        "m_d6c8ed2a24a27a5b",
+        "m_da4b9e04dbc23673",
+        "m_dd69446a7a2aa42e",
+        "m_dedbd1f02055e98b",
+        "m_df1b372fb849e12c",
+        "m_e14dc3c294cd8cc7",
+        "m_e73b28b5447eea29",
+        "m_edf1a27b5bcea6d9",
+        "m_f0403f05121bad6b",
+        "m_f2cb70d05a1e0412",
+        "m_f59a3f5cc2d7dbd5",
+        "m_f8e3c8ad0d047c7a",
+        "m_f90abaf61168e324",
+        "m_fd5ba95dde1fa15c"
+      ],
+      "loc": 2065
+    },
+    {
+      "timestamp": "2026-06-15T18:48:55Z",
+      "run_id": "r_E77466F215",
+      "adapter": "js-ts",
+      "scope": "full",
+      "target": "api+game",
+      "totals": {
+        "total": 404,
+        "found": 289,
+        "hidden": 103,
+        "uncovered": 12,
+        "timeout": 0,
+        "equivalent": 0,
+        "suppressed": 0,
+        "mutation_score": 0.7153465346534653,
+        "test_strength": 0.7372448979591837,
+        "coverage_signal": 0.9702970297029703,
+        "error": 0,
+        "by_kind": {
+          "collection": {
+            "total": 48,
+            "found": 19,
+            "hidden": 22,
+            "uncovered": 7
+          },
+          "remove_conditional": {
+            "total": 111,
+            "found": 90,
+            "hidden": 21,
+            "uncovered": 0
+          },
+          "extreme": {
+            "total": 49,
+            "found": 46,
+            "hidden": 1,
+            "uncovered": 2
+          },
+          "negate_conditional": {
+            "total": 25,
+            "found": 22,
+            "hidden": 3,
+            "uncovered": 0
+          },
+          "string": {
+            "total": 34,
+            "found": 11,
+            "hidden": 20,
+            "uncovered": 3
+          },
+          "constant": {
+            "total": 54,
+            "found": 37,
+            "hidden": 17,
+            "uncovered": 0
+          },
+          "other": {
+            "total": 17,
+            "found": 13,
+            "hidden": 4,
+            "uncovered": 0
+          },
+          "logical": {
+            "total": 27,
+            "found": 18,
+            "hidden": 9,
+            "uncovered": 0
+          },
+          "arithmetic": {
+            "total": 13,
+            "found": 13,
+            "hidden": 0,
+            "uncovered": 0
+          },
+          "remove_call": {
+            "total": 24,
+            "found": 19,
+            "hidden": 5,
+            "uncovered": 0
+          },
+          "null_handling": {
+            "total": 1,
+            "found": 1,
+            "hidden": 0,
+            "uncovered": 0
+          },
+          "unary": {
+            "total": 1,
+            "found": 0,
+            "hidden": 1,
+            "uncovered": 0
+          }
+        },
+        "security": {
+          "tagged": 12,
+          "open": 2,
+          "covered_ratio": 0.8333
+        }
+      },
+      "hidden_wmids": [
+        "m_05d23d94836b82df",
+        "m_073176ef1d4cfd2d",
+        "m_09f9e6407a8a5132",
+        "m_0c3f595fd4a4fc23",
+        "m_1510b7c5f276450d",
+        "m_15dd40add9b21689",
+        "m_16cdaba6238c9399",
+        "m_1792353288bc6bca",
+        "m_189c1cc3211a0e55",
+        "m_1b1cf29aa1881cba",
+        "m_1ff112768e8f2674",
+        "m_200b8322f313fb15",
+        "m_2176cb097e358215",
+        "m_232462d90346beba",
+        "m_28f46cce2d3af3c6",
+        "m_298a756eef4372b1",
+        "m_2acae90622ca8c28",
+        "m_2cb0dab284bdb04f",
+        "m_2cca84537e6db0ea",
+        "m_2d8514b5e3a97958",
+        "m_2ed018db4430ef11",
+        "m_2f4ef7a85051fa13",
+        "m_2fe8f59c43e39c20",
+        "m_30efd366d19f5616",
+        "m_30f060c9fad66505",
+        "m_355b5db538c77e52",
+        "m_3a547e4f7609e09e",
+        "m_3a5684da81d9e6ee",
+        "m_3b01a049569dffe0",
+        "m_3b2fa42847cc8b1f",
+        "m_409f8cb20ad5b8f4",
+        "m_419846d7b2d61376",
+        "m_46ce64c3bf1a068b",
+        "m_492827d9aa8c21af",
+        "m_4c8ff7769923d67b",
+        "m_4e86883e6366dfb2",
+        "m_51e686a55969f856",
+        "m_52c167cceb4de08f",
+        "m_57b9e644e12c0c10",
+        "m_5bc8b5e5db70ca38",
+        "m_5ed24d59c4a78156",
+        "m_63546ed7e384aaba",
+        "m_63778582809174f6",
+        "m_66a00e663fbf9215",
+        "m_6b38e1756654e654",
+        "m_6ec69bfa4ed72e56",
+        "m_6f2e08577cdd8da6",
+        "m_6f98166162353b35",
+        "m_716d1ff306185625",
+        "m_724c84291c896e50",
+        "m_759a0d24549675c9",
+        "m_760037814b6bf241",
+        "m_7696879f1c92f4e4",
+        "m_7723ef9f3ef10c62",
+        "m_77a843e946baf679",
+        "m_79e5bee6b95af6e9",
+        "m_7a3470eee0a900fa",
+        "m_7a916de09c11f2c7",
+        "m_7c011c2bec996552",
+        "m_7e004114dc6fde16",
+        "m_80529e3a49d938f6",
+        "m_809ea26a2e5b2b7b",
+        "m_83e87150736f81b1",
+        "m_87fbfaa1bac979d2",
+        "m_884384c5a49ca823",
+        "m_89a833ce34bf9371",
+        "m_8e593dea7e535ff5",
+        "m_93c42d880ddca49c",
+        "m_95e73a1973a1be22",
+        "m_97150eddf818b165",
+        "m_99b2cd5b05f81e92",
+        "m_9a0c34d4b2e77f1a",
+        "m_9b9180b92fdffcaf",
+        "m_9f1483d8ece004ca",
+        "m_a3ae9b9136ce4f7a",
+        "m_a3fbbd182842d874",
+        "m_a61038472aaaac20",
+        "m_a733d15aaeaee5ef",
+        "m_a845357a58143cf9",
+        "m_a880708ee5b77e4b",
+        "m_a9b70f3106d18a11",
+        "m_aa8fa95a9b6a0283",
+        "m_ab404d0d253888c8",
+        "m_abaceaa3f3a32219",
+        "m_ac891181c3a7aac2",
+        "m_aed5db1699666e99",
+        "m_afbe80e846a14a84",
+        "m_b2766450e289c15f",
+        "m_b31335591bfec0a6",
+        "m_b43244937870acf7",
+        "m_b4aa5720e4854dd8",
+        "m_b742d066700a9f6f",
+        "m_bca8ce4cbd0d9868",
+        "m_bedeeae14d7b48c2",
+        "m_bf4df33ebda42d72",
+        "m_c33edf56d98d3e47",
+        "m_c37c091514dfba36",
+        "m_c3fc0d72dc6fbe89",
+        "m_c68f8dcf01df1efb",
+        "m_c778caa56b9d86ef",
+        "m_c818b6a082c63019",
+        "m_d0cb0a3a9e90bd14",
+        "m_d43d6c95b8dcd3c3",
+        "m_da4b9e04dbc23673",
+        "m_dd69446a7a2aa42e",
+        "m_dedbd1f02055e98b",
+        "m_df1b372fb849e12c",
+        "m_e14dc3c294cd8cc7",
+        "m_e73b28b5447eea29",
+        "m_e83e368aca05adec",
+        "m_edf1a27b5bcea6d9",
+        "m_f0403f05121bad6b",
+        "m_f2cb70d05a1e0412",
+        "m_f8e3c8ad0d047c7a",
+        "m_f90abaf61168e324"
+      ],
+      "loc": 2065
+    }
+  ],
+  "triage": {
+    "m_402047a46b4b00d4": {
+      "resolution": "test_gap",
+      "fix_applied": true,
+      "noted_at": "2026-06-15T18:04:44Z",
+      "notes": "getWinner sort untested - fixtures pre-sorted"
+    },
+    "m_3e1588f1d8aa9fa7": {
+      "resolution": "test_gap",
+      "fix_applied": true,
+      "noted_at": "2026-06-15T18:04:44Z",
+      "notes": "getWinner comparator untested"
+    },
+    "m_59eb319e0faa8f96": {
+      "resolution": "test_gap",
+      "fix_applied": true,
+      "noted_at": "2026-06-15T18:04:44Z",
+      "notes": "getWinner comparator arithmetic untested"
+    },
+    "m_abb9c8fe331f01bf": {
+      "resolution": "test_gap",
+      "fix_applied": true,
+      "noted_at": "2026-06-15T18:04:44Z",
+      "notes": "getCountdown guard only tested with null not undefined"
+    }
+  },
+  "legacy_triage": {},
+  "pr_comment_branches": [],
+  "badge": {},
+  "sync": {}
+}

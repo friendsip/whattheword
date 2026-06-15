@@ -1,0 +1,22 @@
+{
+  "name": "wtw",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "What's the Word game",
+  "scripts": {
+    "start": "vercel dev",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "author": "Mark Trudinger",
+  "license": "ISC",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.71.2",
+    "@vercel/kv": "^3.0.0"
+  },
+  "devDependencies": {
+    "@stryker-mutator/core": "^8.7.1",
+    "@stryker-mutator/vitest-runner": "^8.7.1",
+    "vitest": "^3.2.6"
+  }
+}
