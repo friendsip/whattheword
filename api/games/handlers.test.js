@@ -129,6 +129,7 @@ describe('POST /api/games (create)', () => {
     );
     const savedGame = setGame.mock.calls[0][1];
     expect(savedGame.words).toEqual(['CAT', 'DOG', 'FISH', 'BIRD', 'TREE']);
+    expect(savedGame.customWords).toEqual(['CAT', 'DOG', 'FISH', 'BIRD', 'TREE']);
     expect(getWords).not.toHaveBeenCalled();
   });
 
@@ -208,6 +209,19 @@ describe('POST /api/games/:id/nextround', () => {
     expect(getWords).toHaveBeenCalledTimes(1); // fresh words for the new round
   });
 
+  it('reuses a custom word list on the next round instead of regenerating', async () => {
+    const custom = ['THANE', 'SOLILOQUY', 'BODKIN', 'PETARD', 'ARRANT'];
+    const game = makeGame({ words: [...custom], customWords: [...custom], genre: 'Custom Words' });
+    getGame.mockResolvedValue(game);
+    const res = makeRes();
+    await nextRound(makeReq({ method: 'POST', query: { gameId: 'G1' } }), res);
+
+    expect(res.body).toMatchObject({ success: true, currentRound: 2 });
+    // Same words (order may be reshuffled), no regeneration
+    expect([...game.words].sort()).toEqual([...custom].sort());
+    expect(getWords).not.toHaveBeenCalled();
+  });
+
   it('does NOT complete the game when advancing into (not past) the last round', async () => {
     // Boundary: currentRound 3 of 4 → nextRound 4, which is not > totalRounds.
     getGame.mockResolvedValue(makeGame({ currentRound: 3, totalRounds: 4 }));
@@ -248,6 +262,41 @@ describe('POST /api/games/:id/restart', () => {
     expect(game.gameComplete).toBe(false);
     expect(game.teams.every((t) => t.score === 0)).toBe(true);
     expect(game.genre).toBe('Movies');
+    expect(getWords).toHaveBeenCalledWith('Movies', 'medium');
+  });
+
+  it('keeps the custom word list when replaying the same list', async () => {
+    const custom = ['THANE', 'SOLILOQUY', 'BODKIN', 'PETARD', 'ARRANT'];
+    const game = makeGame({
+      words: [...custom],
+      customWords: [...custom],
+      genre: 'Custom Words',
+      gameComplete: true,
+    });
+    getGame.mockResolvedValue(game);
+    const res = makeRes();
+    await restart(
+      makeReq({ method: 'POST', query: { gameId: 'G1' }, body: { genre: 'Custom Words' } }),
+      res
+    );
+
+    expect([...game.words].sort()).toEqual([...custom].sort());
+    expect(game.customWords).toEqual(custom);
+    expect(getWords).not.toHaveBeenCalled();
+  });
+
+  it('discards the custom word list when restarting with a different category', async () => {
+    const custom = ['THANE', 'SOLILOQUY', 'BODKIN', 'PETARD', 'ARRANT'];
+    const game = makeGame({ words: [...custom], customWords: [...custom], genre: 'Custom Words' });
+    getGame.mockResolvedValue(game);
+    const res = makeRes();
+    await restart(
+      makeReq({ method: 'POST', query: { gameId: 'G1' }, body: { genre: 'Movies' } }),
+      res
+    );
+
+    expect(game.customWords).toBeNull();
+    expect(game.words).toEqual(['ALPHA', 'BRAVO', 'CHARLIE']); // regenerated
     expect(getWords).toHaveBeenCalledWith('Movies', 'medium');
   });
 

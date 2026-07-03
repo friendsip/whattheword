@@ -26,14 +26,18 @@ export default async function handler(req, res) {
     gameId = generateUniqueCode();
   }
 
-  // Use custom words if provided, otherwise generate via API
+  // Use custom words if provided, otherwise generate via API.
+  // A custom list is kept on the game so later rounds reuse it
+  // instead of regenerating words.
   let words;
+  let customWordList = null;
   if (customWords && Array.isArray(customWords) && customWords.length >= 5) {
-    words = customWords
+    customWordList = customWords
       .map(w => w.trim().toUpperCase())
       .filter(w => w.length > 0)
       .filter((w, i, arr) => arr.indexOf(w) === i) // deduplicate
       .slice(0, 50);
+    words = customWordList;
   } else {
     words = await getWords(genre, difficulty);
   }
@@ -51,6 +55,7 @@ export default async function handler(req, res) {
       claimed: true,
     })),
     words,
+    customWords: customWordList,
     genre,
     difficulty,
     roundActive: false,

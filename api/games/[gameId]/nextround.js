@@ -1,5 +1,5 @@
 import { getGame, setGame } from '../../../lib/kv.js';
-import { getWinner } from '../../../lib/game.js';
+import { getWinner, shuffleWords } from '../../../lib/game.js';
 import { getWords } from '../../../lib/words.js';
 
 export default async function handler(req, res) {
@@ -47,8 +47,12 @@ export default async function handler(req, res) {
     team.currentWordIndex = 0;
   });
 
-  // Refresh words for the new round
-  game.words = await getWords(game.genre, game.difficulty);
+  // Refresh words for the new round. A custom word list is reused
+  // (reshuffled so rounds aren't in a memorised order); otherwise
+  // fresh words are generated.
+  game.words = game.customWords
+    ? shuffleWords(game.customWords)
+    : await getWords(game.genre, game.difficulty);
 
   await setGame(gameId, game);
   res.json({ success: true, currentRound: game.currentRound });

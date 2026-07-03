@@ -1,4 +1,5 @@
 import { getGame, setGame } from '../../../lib/kv.js';
+import { shuffleWords } from '../../../lib/game.js';
 import { getWords } from '../../../lib/words.js';
 
 export default async function handler(req, res) {
@@ -19,7 +20,14 @@ export default async function handler(req, res) {
   game.difficulty = difficulty || game.difficulty || 'medium';
   game.totalRounds = totalRounds ? Math.min(Math.max(totalRounds, 1), 10) : game.totalRounds;
   game.roundDuration = roundDuration ? Math.min(Math.max(roundDuration, 30), 180) : game.roundDuration;
-  game.words = await getWords(game.genre, game.difficulty);
+  // Replaying with the same custom list reuses it (reshuffled);
+  // choosing any other category discards the list and generates words.
+  if (game.customWords && game.genre === 'Custom Words') {
+    game.words = shuffleWords(game.customWords);
+  } else {
+    game.customWords = null;
+    game.words = await getWords(game.genre, game.difficulty);
+  }
   game.roundActive = false;
   game.roundEndsAt = null;
   game.countdownEndsAt = null;

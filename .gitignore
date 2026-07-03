@@ -18,3 +18,9 @@ yarn-error.log*
 # Mutation testing
 reports/
 .stryker-tmp/
+
+# Local docs & reports
+docs/
+
+# Playwright MCP session logs
+.playwright-mcp/
