@@ -42,21 +42,31 @@ wtw/
 │   ├── kv.js                         # Redis/KV database wrapper
 │   ├── game.js                       # Game logic (timers, state updates)
 │   └── words.js                      # Word generation with Claude AI
-├── client/                           # React frontend (unchanged)
+├── client/                           # React frontend (part of this repo)
 ├── vercel.json                       # Vercel configuration
 ├── package.json                      # Root dependencies
 └── CLAUDE.md                         # Developer reference
 ```
+
+> **Monorepo note:** `client/` used to be a separate Git repository referenced
+> as a submodule. It is now folded into this repo as ordinary files so the whole
+> app (API functions + client) deploys from a single push. The client's own
+> secrets (`client/.env*`) remain git-ignored and are never committed.
 
 ---
 
 ## Local Development
 
 ### Prerequisites
-- Node.js 18+
+- Node.js 22.x (matches the Vercel runtime pinned via `engines` in `package.json`)
 - npm
 - Vercel CLI (`npm i -g vercel`)
 - A Vercel account (free tier works)
+
+> **Tip:** To click through the UI without Vercel KV or an Anthropic key, you can
+> run the app against in-memory storage — build the client (`cd client && npm run
+> build`) and serve `client/build` alongside the `/api` handlers with a small
+> local server. This is only for UI/gameplay testing; real games need KV.
 
 ### Step 1: Install Dependencies
 
@@ -137,15 +147,23 @@ vercel env add ANTHROPIC_API_KEY
 
 ### Step 2: Deploy
 
-Preview deployment:
-```bash
-vercel
-```
+**Option A — Git-connected (recommended).** In the Vercel dashboard, import this
+repository (**Add New → Project → import the Git repo**). Vercel reads
+`vercel.json` automatically:
 
-Production deployment:
-```bash
-vercel --prod
-```
+- **Build command:** `cd client && npm install && npm run build`
+- **Output directory:** `client/build`
+- **Functions:** everything under `/api` is deployed as a serverless function
+- **Rewrites:** `/api/*` → functions; everything else → `/index.html` so the
+  React Router deep links (`/join/CODE`, `/game/CODE/team/0`, `/spectate`) and
+  page refreshes resolve instead of 404ing.
+
+Once connected, every push to the production branch (`main`) triggers a
+production deploy; pushes to other branches get preview URLs. No `homepage`
+field or `REACT_APP_API_URL` is needed — the client calls the API same-origin.
+
+**Option B — CLI.** From the repo root: `vercel` for a preview, `vercel --prod`
+for production.
 
 ### Step 3: Verify
 
@@ -241,7 +259,7 @@ Since serverless functions can't use `setInterval`, game timing is handled diffe
 
 ### Local dev not connecting to KV
 - Run `vercel env pull .env.local` to get latest credentials
-- Ensure you're running `npm run dev` (not `npm start`)
+- `npm run dev` and `npm start` both launch `vercel dev`
 
 ### Deployment fails
 - Check Vercel build logs for errors

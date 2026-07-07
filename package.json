@@ -4,9 +4,13 @@
   "type": "module",
   "description": "What's the Word game",
   "scripts": {
+    "dev": "vercel dev",
     "start": "vercel dev",
     "test": "vitest run",
     "test:watch": "vitest"
+  },
+  "engines": {
+    "node": "22.x"
   },
   "author": "Mark Trudinger",
   "license": "ISC",

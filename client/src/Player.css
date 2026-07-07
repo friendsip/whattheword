@@ -1,0 +1,607 @@
+/* ===== Player Container ===== */
+.player-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-lg);
+  padding-bottom: 140px; /* Space for fixed buttons */
+  max-width: 500px;
+  margin: 0 auto;
+  min-height: 100vh;
+  min-height: 100dvh;
+  text-align: center;
+}
+
+.player-container.no-buttons {
+  padding-bottom: var(--space-lg);
+}
+
+/* Positioning context for the absolute mute button on wide screens
+   (see .mute-button in GameSetup.css) */
+@media (min-width: 700px) {
+  .player-container {
+    position: relative;
+  }
+}
+
+/* ===== Error ===== */
+.player-container .error {
+  background-color: var(--accent-red);
+  color: white;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-md);
+  font-size: 0.9rem;
+  width: 100%;
+}
+
+/* ===== Genre / Category Display ===== */
+.genre-display {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  margin: var(--space-sm) 0;
+}
+
+.genre-display strong {
+  color: var(--accent-blue);
+  font-weight: 700;
+}
+
+/* ===== Round Pill ===== */
+.round-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  background-color: var(--bg-tertiary);
+  padding: var(--space-xs) var(--space-md);
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-md);
+}
+
+/* ===== Ready Button ===== */
+.ready-button {
+  background-color: var(--accent-green);
+  color: white;
+  padding: var(--space-md) var(--space-xl);
+  font-size: 1.2rem;
+  font-weight: 700;
+  border-radius: var(--radius-md);
+  min-height: 56px;
+  min-width: 200px;
+  animation: ready-pulse 2s ease-in-out infinite;
+}
+
+.ready-button:hover {
+  background-color: var(--accent-green-hover);
+  box-shadow: 0 4px 16px rgba(0, 184, 148, 0.35);
+}
+
+@keyframes ready-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0, 184, 148, 0.4); }
+  50% { box-shadow: 0 0 0 12px rgba(0, 184, 148, 0); }
+}
+
+/* ===== Waiting State ===== */
+.waiting-text {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  margin: var(--space-md) 0;
+}
+
+.waiting-dots {
+  display: inline-flex;
+  gap: 6px;
+  margin-left: var(--space-sm);
+}
+
+.waiting-dots span {
+  width: 8px;
+  height: 8px;
+  background-color: var(--accent-blue);
+  border-radius: 50%;
+  animation: dot-bounce 1.4s ease-in-out infinite;
+}
+
+.waiting-dots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.waiting-dots span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes dot-bounce {
+  0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+  40% { transform: translateY(-8px); opacity: 1; }
+}
+
+/* ===== Team Ready Status List ===== */
+.team-ready-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  width: 100%;
+  max-width: 320px;
+  margin: var(--space-md) auto;
+}
+
+.team-ready-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 1px 3px var(--shadow-color);
+  text-align: left;
+}
+
+.team-ready-swatch {
+  flex-shrink: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.team-ready-name {
+  flex: 1;
+  font-weight: 600;
+  font-size: 0.9rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.team-ready-state {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.team-ready-row.ready .team-ready-state {
+  color: var(--accent-green);
+}
+
+/* ===== Pre-game Info ===== */
+.game-info-chips {
+  display: flex;
+  gap: var(--space-sm);
+  justify-content: center;
+  margin-bottom: var(--space-md);
+}
+
+.info-chip {
+  background-color: var(--bg-tertiary);
+  color: var(--text-secondary);
+  padding: var(--space-xs) var(--space-md);
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.how-to-hint {
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  box-shadow: 0 1px 3px var(--shadow-color);
+  padding: var(--space-md);
+  max-width: 320px;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  text-align: left;
+}
+
+.how-to-hint p {
+  margin: 0 0 var(--space-sm) 0;
+}
+
+.how-to-hint p:last-child {
+  margin-bottom: 0;
+}
+
+.how-to-hint strong {
+  color: var(--text-primary);
+}
+
+.hint-got-it {
+  color: var(--accent-green);
+  font-weight: 700;
+}
+
+.hint-skip {
+  color: var(--accent-red);
+  font-weight: 700;
+}
+
+/* ===== Countdown Overlay ===== */
+.countdown-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-primary);
+  z-index: 50;
+}
+
+.countdown-number {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 800;
+  font-size: 8rem;
+  color: var(--accent-blue);
+  animation: countdown-pop 0.8s ease-out;
+}
+
+.countdown-number.go {
+  color: var(--accent-green);
+  font-size: 5rem;
+  animation: countdown-burst 0.6s ease-out;
+}
+
+@keyframes countdown-pop {
+  0% { transform: scale(0.5); opacity: 0; }
+  50% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes countdown-burst {
+  0% { transform: scale(0); opacity: 0; }
+  60% { transform: scale(1.3); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ===== Circular Timer ===== */
+.timer-container {
+  position: relative;
+  width: 260px;
+  height: 260px;
+  margin: var(--space-md) 0;
+}
+
+.timer-ring {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.timer-ring-bg {
+  fill: none;
+  stroke: var(--border-color);
+  stroke-width: 8;
+}
+
+.timer-ring-progress {
+  fill: none;
+  stroke: var(--accent-green);
+  stroke-width: 8;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s linear, stroke 0.3s ease;
+}
+
+.timer-ring-progress.warning {
+  stroke: var(--accent-orange);
+}
+
+.timer-ring-progress.critical {
+  stroke: var(--accent-red);
+  animation: timer-pulse 0.8s ease-in-out infinite;
+}
+
+@keyframes timer-pulse {
+  0%, 100% { stroke-width: 8; }
+  50% { stroke-width: 11; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .timer-ring-progress.critical {
+    animation: none;
+  }
+}
+
+.timer-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.timer-word {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 1.8rem;
+  color: var(--text-primary);
+  line-height: 1.2;
+  max-width: 200px;
+  word-wrap: break-word;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+/* Long words shrink to stay legible inside the ring */
+.timer-word.word-long {
+  font-size: 1.4rem;
+}
+
+.timer-word.word-xlong {
+  font-size: 1.05rem;
+}
+
+.timer-word.exit {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.timer-word.enter {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.timer-seconds {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-top: var(--space-xs);
+}
+
+.timer-seconds.warning {
+  color: var(--accent-orange);
+}
+
+.timer-seconds.critical {
+  color: var(--accent-red);
+  font-weight: 700;
+}
+
+/* ===== Score Badge ===== */
+.score-badge {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: var(--accent-blue);
+  margin: var(--space-sm) 0;
+}
+
+/* ===== Guess Buttons (Fixed Bottom) ===== */
+.guess-buttons {
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  z-index: 40;
+}
+
+.wrong-button,
+.right-button {
+  flex: 1;
+  font-size: 1.6rem;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+.wrong-button {
+  background-color: var(--accent-red);
+  color: white;
+}
+
+.wrong-button:hover {
+  background-color: var(--accent-red-hover);
+}
+
+.wrong-button:active {
+  transform: none;
+  background-color: var(--accent-red-hover);
+}
+
+.right-button {
+  background-color: var(--accent-green);
+  color: white;
+}
+
+.right-button:hover {
+  background-color: var(--accent-green-hover);
+}
+
+.right-button:active {
+  transform: none;
+  background-color: var(--accent-green-hover);
+}
+
+/* ===== Flash Feedback ===== */
+.flash-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 30;
+  opacity: 0;
+}
+
+.flash-overlay.correct {
+  background-color: var(--accent-green);
+  animation: flash-feedback 0.35s ease-out;
+}
+
+.flash-overlay.skip {
+  background-color: var(--accent-red);
+  animation: flash-feedback 0.35s ease-out;
+}
+
+@keyframes flash-feedback {
+  0% { opacity: 0.35; }
+  100% { opacity: 0; }
+}
+
+/* ===== Round Recap (Player View) ===== */
+.round-recap {
+  width: 100%;
+  margin-top: var(--space-md);
+}
+
+.round-recap h3 {
+  font-size: 1rem;
+  margin-bottom: var(--space-md);
+}
+
+.recap-summary {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-md);
+}
+
+.recap-count {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.recap-count.correct {
+  color: var(--accent-green);
+}
+
+.recap-count.skipped {
+  color: var(--accent-red);
+}
+
+.recap-word-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.recap-word-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+}
+
+.recap-icon {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: white;
+  font-weight: 700;
+}
+
+.recap-icon.correct {
+  background-color: var(--accent-green);
+}
+
+.recap-icon.skipped {
+  background-color: var(--accent-red);
+}
+
+/* ===== Game Over (Player) ===== */
+.player-container.game-over {
+  padding-bottom: var(--space-lg);
+}
+
+.game-over-title {
+  font-size: 2rem;
+  margin-bottom: var(--space-md);
+}
+
+.final-leaderboard {
+  width: 100%;
+  margin-top: var(--space-md);
+}
+
+.final-leaderboard-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-xs);
+}
+
+.final-leaderboard-item.current-team {
+  border: 2px solid var(--accent-blue);
+}
+
+.final-leaderboard-name {
+  flex: 1;
+  font-weight: 600;
+}
+
+.final-leaderboard-score {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  color: var(--accent-blue);
+}
+
+/* ===== All Ready Flash ===== */
+.all-ready-flash {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 800;
+  font-size: 2rem;
+  color: var(--accent-green);
+  animation: all-ready 0.6s ease-out;
+}
+
+@keyframes all-ready {
+  0% { transform: scale(0.5); opacity: 0; }
+  60% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 400px) {
+  .timer-container {
+    width: 220px;
+    height: 220px;
+  }
+
+  .timer-word {
+    font-size: 1.5rem;
+    max-width: 170px;
+  }
+
+  .timer-word.word-long {
+    font-size: 1.2rem;
+  }
+
+  .timer-word.word-xlong {
+    font-size: 0.95rem;
+  }
+
+  .guess-buttons {
+    height: 100px;
+  }
+
+  .wrong-button,
+  .right-button {
+    font-size: 1.3rem;
+  }
+
+  .player-container {
+    padding-bottom: 120px;
+  }
+}

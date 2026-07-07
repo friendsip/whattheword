@@ -1,0 +1,113 @@
+:root {
+  /* Light mode colors — clean & modern */
+  --bg-primary: #f0f4ff;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #e8eeff;
+  --bg-input: #ffffff;
+  --text-primary: #1a1a2e;
+  --text-secondary: #555770;
+  --border-color: #d8dce6;
+  --shadow-color: rgba(0, 0, 0, 0.08);
+
+  --accent-blue: #6c5ce7;
+  --accent-blue-hover: #5a4bd1;
+  --accent-green: #00b894;
+  --accent-green-hover: #00a381;
+  --accent-red: #ff6b6b;
+  --accent-red-hover: #ee5a5a;
+  --accent-yellow: #ffd93d;
+  --accent-orange: #ff9f43;
+
+  /* Team colors */
+  --team-1: #6c5ce7;
+  --team-2: #00b894;
+  --team-3: #ff6b6b;
+  --team-4: #ffd93d;
+  --team-5: #0984e3;
+  --team-6: #e17055;
+  --team-7: #00cec9;
+  --team-8: #fd79a8;
+  --team-9: #636e72;
+  --team-10: #a29bfe;
+
+  /* Spacing scale */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+
+  /* Border radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-primary: #0f0e17;
+    --bg-secondary: #1a1933;
+    --bg-tertiary: #252442;
+    --bg-input: #1a1933;
+    --text-primary: #fffffe;
+    --text-secondary: #a7a9be;
+    --border-color: #3a3a5a;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+
+    --accent-blue: #7f5af0;
+    --accent-blue-hover: #6b46e5;
+    --accent-green: #2cb67d;
+    --accent-green-hover: #25a06d;
+    --accent-red: #ff6e6e;
+    --accent-red-hover: #e55c5c;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0 0 var(--space-md) 0;
+}
+
+button {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+input, select {
+  font-family: 'Inter', sans-serif;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+a {
+  color: var(--accent-blue);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
