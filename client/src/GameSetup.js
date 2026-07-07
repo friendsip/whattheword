@@ -3,6 +3,7 @@ import axios from 'axios';
 import { QRCodeSVG } from 'qrcode.react';
 import confetti from 'canvas-confetti';
 import { useSound } from './hooks/useSound';
+import CategoryIcon from './CategoryIcon';
 import './GameSetup.css';
 
 const API_URL = process.env.REACT_APP_API_URL || '';
@@ -487,7 +488,7 @@ function GameSetup() {
                     onClick={() => setGenre(g.value)}
                     aria-pressed={genre === g.value}
                   >
-                    <span className="cat-emoji">{g.emoji}</span>
+                    <span className="cat-icon"><CategoryIcon name={g.value} /></span>
                     <span className="cat-label">{g.label}</span>
                   </button>
                 ))}
@@ -501,7 +502,7 @@ function GameSetup() {
                     onClick={() => setGenre(g.value)}
                     aria-pressed={genre === g.value}
                   >
-                    <span className="cat-emoji">{g.emoji}</span>
+                    <span className="cat-icon"><CategoryIcon name={g.value} /></span>
                     <span className="cat-label">{g.label}</span>
                   </button>
                 ))}
