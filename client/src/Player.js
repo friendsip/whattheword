@@ -208,17 +208,16 @@ function Player() {
     return 'normal';
   };
 
-  // SVG timer ring calculations
-  const radius = 110;
-  const circumference = 2 * Math.PI * radius;
+  // Timer fill fraction (word is the hero; the timer is a slim bar below it)
   const progress = gameState.roundActive ? timeLeft / totalTime : 1;
-  const dashOffset = circumference * (1 - progress);
   const urgency = getUrgency();
 
-  // Long words scale down so they still fit inside the timer ring
+  // The word is displayed large; only very long words step down, never below legible
   const activeWord = displayWord || gameState.currentWord || '';
   const wordSizeClass =
-    activeWord.length > 14 ? 'word-xlong' : activeWord.length > 9 ? 'word-long' : '';
+    activeWord.length > 22 ? 'word-xxlong' :
+    activeWord.length > 14 ? 'word-xlong' :
+    activeWord.length > 9 ? 'word-long' : '';
 
   // Countdown colors
   const countdownColor = (n) => {
@@ -438,27 +437,21 @@ function Player() {
         {gameState.genre}
       </div>
 
-      {/* Circular Timer */}
-      <div className="timer-container">
-        <svg className="timer-ring" viewBox="0 0 240 240">
-          <circle
-            cx="120" cy="120" r={radius}
-            className="timer-ring-bg"
+      {/* The word — the hero of the screen */}
+      <div className="word-stage">
+        <div className={`word-hero ${wordAnim} ${wordSizeClass}`}>
+          {activeWord}
+        </div>
+      </div>
+
+      {/* Timer — a slim draining bar with a bold countdown */}
+      <div className={`round-timer ${urgency}`}>
+        <div className="round-timer-seconds">{timeLeft}s</div>
+        <div className="round-timer-track">
+          <div
+            className="round-timer-fill"
+            style={{ width: `${Math.max(0, Math.min(1, progress)) * 100}%` }}
           />
-          <circle
-            cx="120" cy="120" r={radius}
-            className={`timer-ring-progress ${urgency}`}
-            strokeDasharray={circumference}
-            strokeDashoffset={dashOffset}
-          />
-        </svg>
-        <div className="timer-center">
-          <div className={`timer-word ${wordAnim} ${wordSizeClass}`}>
-            {activeWord}
-          </div>
-          <div className={`timer-seconds ${urgency}`}>
-            {timeLeft}s
-          </div>
         </div>
       </div>
 

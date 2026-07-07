@@ -169,6 +169,167 @@
   margin-top: var(--space-xs);
 }
 
+/* ===== Setup Sections ===== */
+.setup-section {
+  margin-bottom: var(--space-lg);
+  text-align: left;
+}
+
+.setup-label {
+  display: block;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text-primary);
+  margin-bottom: var(--space-sm);
+}
+
+/* ===== Category Grid ===== */
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(92px, 1fr));
+  gap: var(--space-sm);
+}
+
+.category-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: var(--space-md) var(--space-xs);
+  min-height: 84px;
+  background-color: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  position: relative;
+  box-shadow: 0 1px 2px var(--shadow-color);
+  transition: border-color 0.15s ease, background-color 0.15s ease, transform 0.1s ease;
+}
+
+.category-card:hover {
+  border-color: var(--accent-blue);
+}
+
+.category-card:active {
+  transform: scale(0.97);
+}
+
+.category-card .cat-emoji {
+  font-size: 1.9rem;
+  line-height: 1;
+}
+
+.category-card .cat-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-align: center;
+  line-height: 1.15;
+}
+
+.category-card.selected {
+  border-color: var(--accent-blue);
+  background-color: var(--bg-tertiary);
+  box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.18);
+}
+
+.category-card.selected .cat-label {
+  color: var(--accent-blue);
+}
+
+/* Checkmark badge on the chosen card */
+.category-card.selected::after {
+  content: '\2713';
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--accent-blue);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 0.65rem;
+  font-weight: 700;
+}
+
+/* "Bring your own" cards sit below the presets, visually distinct */
+.category-grid.custom-cards {
+  grid-template-columns: repeat(2, 1fr);
+  margin-top: var(--space-sm);
+}
+
+.category-card.custom-card {
+  border-style: dashed;
+  min-height: 68px;
+  flex-direction: row;
+  gap: var(--space-sm);
+}
+
+.category-card.custom-card .cat-emoji {
+  font-size: 1.3rem;
+}
+
+.category-card.custom-card .cat-label {
+  font-size: 0.85rem;
+}
+
+/* ===== Settings Row (teams / rounds / seconds) ===== */
+.settings-row {
+  display: flex;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.settings-row > div {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.settings-row label {
+  font-size: 0.8rem;
+}
+
+/* ===== Segmented Difficulty Control ===== */
+.segmented {
+  display: flex;
+  gap: 4px;
+  background-color: var(--bg-tertiary);
+  border-radius: var(--radius-sm);
+  padding: 4px;
+}
+
+.segmented-option {
+  flex: 1;
+  padding: var(--space-sm);
+  min-height: 42px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: calc(var(--radius-sm) - 2px);
+}
+
+.segmented-option:hover {
+  color: var(--text-primary);
+}
+
+.segmented-option.active {
+  background-color: var(--bg-secondary);
+  color: var(--accent-blue);
+  box-shadow: 0 1px 3px var(--shadow-color);
+}
+
+.difficulty-hint {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-top: var(--space-xs);
+}
+
 /* ===== Team Name Inputs ===== */
 .game-setup-container form > div {
   margin-bottom: var(--space-sm);

@@ -7,18 +7,34 @@ import './GameSetup.css';
 
 const API_URL = process.env.REACT_APP_API_URL || '';
 
-const GENRE_OPTIONS = [
+// Preset categories shown as a tappable grid. Educational picks come first
+// so the classroom use is obvious; the party categories follow.
+const CATEGORY_OPTIONS = [
   { value: 'General', label: 'General', emoji: '🎲' },
-  { value: 'Christmas', label: 'Christmas', emoji: '🎄' },
-  { value: 'Pop Music', label: 'Pop Music', emoji: '🎵' },
+  { value: 'Shakespeare', label: 'Shakespeare', emoji: '🎭' },
+  { value: 'Science', label: 'Science', emoji: '🔬' },
+  { value: 'Animals', label: 'Animals', emoji: '🐘' },
+  { value: 'Geography', label: 'Geography', emoji: '🌍' },
   { value: 'Movies', label: 'Movies', emoji: '🎬' },
-  { value: 'Friends TV Show', label: 'Friends TV Show', emoji: '☕' },
+  { value: 'Pop Music', label: 'Pop Music', emoji: '🎵' },
+  { value: 'Christmas', label: 'Christmas', emoji: '🎄' },
+  { value: 'Friends TV Show', label: 'Friends', emoji: '☕' },
   { value: 'The Bible', label: 'The Bible', emoji: '📖' },
   { value: 'US Politics', label: 'US Politics', emoji: '🇺🇸' },
   { value: 'UK Politics', label: 'UK Politics', emoji: '🇬🇧' },
-  { value: 'Custom', label: 'Custom Category', emoji: '✏️' },
-  { value: 'CustomList', label: 'Custom Word List', emoji: '📝' },
 ];
+
+// "Bring your own" options — a free-text topic or a hand-typed word list.
+const CUSTOM_OPTIONS = [
+  { value: 'Custom', label: 'Custom Topic', emoji: '✏️' },
+  { value: 'CustomList', label: 'Your Word List', emoji: '📝' },
+];
+
+const DIFFICULTY_HINTS = {
+  easy: 'Simple, everyday words',
+  medium: 'A good mix',
+  hard: 'Challenging & abstract',
+};
 
 const TEAM_COLORS = [
   '#6c5ce7', '#00b894', '#ff6b6b', '#ffd93d', '#0984e3',
@@ -322,7 +338,8 @@ function GameSetup() {
                   ...(gameState.genre === 'Custom Words'
                     ? [{ value: 'Custom Words', label: 'Same Word List', emoji: '📝' }]
                     : []),
-                  ...GENRE_OPTIONS.filter(g => g.value !== 'CustomList'),
+                  ...CATEGORY_OPTIONS,
+                  { value: 'Custom', label: 'Custom Topic', emoji: '✏️' },
                 ].map((g) => (
                   <option key={g.value} value={g.value}>{g.emoji} {g.label}</option>
                 ))}
@@ -458,77 +475,42 @@ function GameSetup() {
               </div>
             )}
 
-            <div className="team-selection">
-              <label htmlFor="numTeams">How many teams?</label>
-              <select
-                id="numTeams"
-                value={numTeams}
-                onChange={handleNumTeamsChange}
-                required
-                className="team-select"
-              >
-                {[...Array(9)].map((_, i) => (
-                  <option key={i} value={i + 2}>
-                    {i + 2} Teams
-                  </option>
+            {/* Category — the star choice, shown as a tappable grid */}
+            <div className="setup-section">
+              <span className="setup-label">Choose a category</span>
+              <div className="category-grid">
+                {CATEGORY_OPTIONS.map((g) => (
+                  <button
+                    type="button"
+                    key={g.value}
+                    className={`category-card ${genre === g.value ? 'selected' : ''}`}
+                    onClick={() => setGenre(g.value)}
+                    aria-pressed={genre === g.value}
+                  >
+                    <span className="cat-emoji">{g.emoji}</span>
+                    <span className="cat-label">{g.label}</span>
+                  </button>
                 ))}
-              </select>
-            </div>
-
-            <div className="rounds-selection">
-              <label htmlFor="numRounds">How many rounds?</label>
-              <select
-                id="numRounds"
-                value={numRounds}
-                onChange={(e) => setNumRounds(parseInt(e.target.value, 10))}
-                required
-                className="rounds-select"
-              >
-                {[2, 4, 6, 8, 10].map((rounds) => (
-                  <option key={rounds} value={rounds}>
-                    {rounds} Rounds
-                  </option>
+              </div>
+              <div className="category-grid custom-cards">
+                {CUSTOM_OPTIONS.map((g) => (
+                  <button
+                    type="button"
+                    key={g.value}
+                    className={`category-card custom-card ${genre === g.value ? 'selected' : ''}`}
+                    onClick={() => setGenre(g.value)}
+                    aria-pressed={genre === g.value}
+                  >
+                    <span className="cat-emoji">{g.emoji}</span>
+                    <span className="cat-label">{g.label}</span>
+                  </button>
                 ))}
-              </select>
-            </div>
-
-            <div className="duration-selection">
-              <label htmlFor="roundDuration">Seconds per round?</label>
-              <select
-                id="roundDuration"
-                value={roundDuration}
-                onChange={(e) => setRoundDuration(parseInt(e.target.value, 10))}
-                required
-                className="duration-select"
-              >
-                {[30, 45, 60, 90, 120, 180].map((seconds) => (
-                  <option key={seconds} value={seconds}>
-                    {seconds} seconds
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="genre-selection">
-              <label htmlFor="genre">Word category?</label>
-              <select
-                id="genre"
-                value={genre}
-                onChange={(e) => setGenre(e.target.value)}
-                required
-                className="genre-select"
-              >
-                {GENRE_OPTIONS.map((g) => (
-                  <option key={g.value} value={g.value}>
-                    {g.emoji} {g.label}
-                  </option>
-                ))}
-              </select>
+              </div>
             </div>
 
             {genre === 'Custom' && (
               <div className="custom-genre">
-                <label htmlFor="customGenre">Enter your category:</label>
+                <label htmlFor="customGenre">Enter your topic:</label>
                 <input
                   type="text"
                   id="customGenre"
@@ -553,18 +535,73 @@ function GameSetup() {
               </div>
             )}
 
-            <div className="difficulty-selection">
-              <label htmlFor="difficulty">Difficulty?</label>
-              <select
-                id="difficulty"
-                value={difficulty}
-                onChange={(e) => setDifficulty(e.target.value)}
-                className="difficulty-select"
-              >
-                <option value="easy">Easy — simple, everyday words</option>
-                <option value="medium">Medium — a good mix</option>
-                <option value="hard">Hard — challenging & abstract</option>
-              </select>
+            {/* Game settings — compact, secondary to the category choice */}
+            <div className="setup-section">
+              <span className="setup-label">Game settings</span>
+              <div className="settings-row">
+                <div className="team-selection">
+                  <label htmlFor="numTeams">Teams</label>
+                  <select
+                    id="numTeams"
+                    value={numTeams}
+                    onChange={handleNumTeamsChange}
+                    required
+                    className="team-select"
+                  >
+                    {[...Array(9)].map((_, i) => (
+                      <option key={i} value={i + 2}>{i + 2}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="rounds-selection">
+                  <label htmlFor="numRounds">Rounds</label>
+                  <select
+                    id="numRounds"
+                    value={numRounds}
+                    onChange={(e) => setNumRounds(parseInt(e.target.value, 10))}
+                    required
+                    className="rounds-select"
+                  >
+                    {[2, 4, 6, 8, 10].map((rounds) => (
+                      <option key={rounds} value={rounds}>{rounds}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="duration-selection">
+                  <label htmlFor="roundDuration">Seconds</label>
+                  <select
+                    id="roundDuration"
+                    value={roundDuration}
+                    onChange={(e) => setRoundDuration(parseInt(e.target.value, 10))}
+                    required
+                    className="duration-select"
+                  >
+                    {[30, 45, 60, 90, 120, 180].map((seconds) => (
+                      <option key={seconds} value={seconds}>{seconds}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <div className="difficulty-selection">
+                <label>Difficulty</label>
+                <div className="segmented" role="group" aria-label="Difficulty">
+                  {['easy', 'medium', 'hard'].map((val) => (
+                    <button
+                      type="button"
+                      key={val}
+                      className={`segmented-option ${difficulty === val ? 'active' : ''}`}
+                      onClick={() => setDifficulty(val)}
+                      aria-pressed={difficulty === val}
+                    >
+                      {val.charAt(0).toUpperCase() + val.slice(1)}
+                    </button>
+                  ))}
+                </div>
+                <div className="difficulty-hint">{DIFFICULTY_HINTS[difficulty]}</div>
+              </div>
             </div>
           </div>
 

@@ -254,108 +254,105 @@
   100% { transform: scale(1); opacity: 1; }
 }
 
-/* ===== Circular Timer ===== */
-.timer-container {
-  position: relative;
-  width: 260px;
-  height: 260px;
-  margin: var(--space-md) 0;
-}
-
-.timer-ring {
-  width: 100%;
-  height: 100%;
-  transform: rotate(-90deg);
-}
-
-.timer-ring-bg {
-  fill: none;
-  stroke: var(--border-color);
-  stroke-width: 8;
-}
-
-.timer-ring-progress {
-  fill: none;
-  stroke: var(--accent-green);
-  stroke-width: 8;
-  stroke-linecap: round;
-  transition: stroke-dashoffset 1s linear, stroke 0.3s ease;
-}
-
-.timer-ring-progress.warning {
-  stroke: var(--accent-orange);
-}
-
-.timer-ring-progress.critical {
-  stroke: var(--accent-red);
-  animation: timer-pulse 0.8s ease-in-out infinite;
-}
-
-@keyframes timer-pulse {
-  0%, 100% { stroke-width: 8; }
-  50% { stroke-width: 11; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .timer-ring-progress.critical {
-    animation: none;
-  }
-}
-
-.timer-center {
-  position: absolute;
-  inset: 0;
+/* ===== Word Hero ===== */
+.word-stage {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  min-height: 200px;
+  margin: var(--space-md) 0;
+  padding: 0 var(--space-sm);
 }
 
-.timer-word {
+.word-hero {
   font-family: 'Poppins', sans-serif;
-  font-weight: 700;
-  font-size: 1.8rem;
+  font-weight: 800;
+  font-size: 3.4rem;
+  line-height: 1.05;
+  letter-spacing: -0.5px;
   color: var(--text-primary);
-  line-height: 1.2;
-  max-width: 200px;
-  word-wrap: break-word;
+  text-align: center;
+  word-break: break-word;
   transition: opacity 0.15s ease, transform 0.15s ease;
 }
 
-/* Long words shrink to stay legible inside the ring */
-.timer-word.word-long {
-  font-size: 1.4rem;
-}
+/* Only very long words step down — and never below legible */
+.word-hero.word-long { font-size: 2.7rem; }
+.word-hero.word-xlong { font-size: 2rem; }
+.word-hero.word-xxlong { font-size: 1.5rem; }
 
-.timer-word.word-xlong {
-  font-size: 1.05rem;
-}
-
-.timer-word.exit {
+.word-hero.exit {
   opacity: 0;
-  transform: translateY(-10px);
+  transform: translateY(-12px);
 }
 
-.timer-word.enter {
+.word-hero.enter {
   opacity: 0;
-  transform: translateY(10px);
+  transform: translateY(12px);
 }
 
-.timer-seconds {
+/* ===== Round Timer (bar under the word) ===== */
+.round-timer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  width: 100%;
+  max-width: 320px;
+}
+
+.round-timer-seconds {
   font-family: 'Poppins', sans-serif;
-  font-weight: 600;
-  font-size: 1.1rem;
-  color: var(--text-secondary);
-  margin-top: var(--space-xs);
+  font-weight: 800;
+  font-size: 2.2rem;
+  line-height: 1;
+  color: var(--accent-green);
+  font-variant-numeric: tabular-nums;
+  transition: color 0.3s ease;
 }
 
-.timer-seconds.warning {
+.round-timer.warning .round-timer-seconds {
   color: var(--accent-orange);
 }
 
-.timer-seconds.critical {
+.round-timer.critical .round-timer-seconds {
   color: var(--accent-red);
-  font-weight: 700;
+  animation: seconds-pulse 0.8s ease-in-out infinite;
+}
+
+@keyframes seconds-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.12); }
+}
+
+.round-timer-track {
+  width: 100%;
+  height: 10px;
+  border-radius: var(--radius-full);
+  background-color: var(--border-color);
+  overflow: hidden;
+}
+
+.round-timer-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  background-color: var(--accent-green);
+  transition: width 1s linear, background-color 0.3s ease;
+}
+
+.round-timer.warning .round-timer-fill {
+  background-color: var(--accent-orange);
+}
+
+.round-timer.critical .round-timer-fill {
+  background-color: var(--accent-red);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .round-timer.critical .round-timer-seconds {
+    animation: none;
+  }
 }
 
 /* ===== Score Badge ===== */
@@ -574,22 +571,28 @@
 
 /* ===== Responsive ===== */
 @media (max-width: 400px) {
-  .timer-container {
-    width: 220px;
-    height: 220px;
+  .word-stage {
+    min-height: 160px;
   }
 
-  .timer-word {
-    font-size: 1.5rem;
-    max-width: 170px;
+  .word-hero {
+    font-size: 2.7rem;
   }
 
-  .timer-word.word-long {
+  .word-hero.word-long {
+    font-size: 2.1rem;
+  }
+
+  .word-hero.word-xlong {
+    font-size: 1.6rem;
+  }
+
+  .word-hero.word-xxlong {
     font-size: 1.2rem;
   }
 
-  .timer-word.word-xlong {
-    font-size: 0.95rem;
+  .round-timer-seconds {
+    font-size: 1.8rem;
   }
 
   .guess-buttons {
