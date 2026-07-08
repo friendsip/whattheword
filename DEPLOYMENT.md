@@ -78,30 +78,29 @@ npm install
 cd client && npm install && cd ..
 ```
 
-### Step 2: Set Up Vercel KV for Local Development
+### Step 2: Set Up a Redis Store for Local Development
 
-You need a Vercel KV database even for local development:
+Game state lives in Redis. Vercel KV was sunset in 2024 and replaced by
+**Upstash Redis** on the Vercel Marketplace, so:
 
-1. Log in to Vercel CLI:
+1. Log in and link the project:
    ```bash
    vercel login
-   ```
-
-2. Link your project:
-   ```bash
    vercel link
    ```
 
-3. Create a KV database (if you haven't already):
-   ```bash
-   vercel kv create wtw-games
-   ```
-   Or create one in the Vercel dashboard under Storage → KV.
+2. In the Vercel dashboard, open your project → **Storage** → add
+   **Upstash for Redis** (Marketplace). This provisions the store and injects
+   its REST URL/token as environment variables.
 
-4. Pull environment variables to local:
+3. Pull them to local:
    ```bash
    vercel env pull .env.local
    ```
+
+`lib/kv.js` reads `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` and
+falls back to the legacy `KV_REST_API_URL` / `KV_REST_API_TOKEN` names, so
+either naming works with no code change.
 
 ### Step 3: Add Anthropic API Key
 
@@ -137,8 +136,8 @@ In the Vercel dashboard (or CLI), set:
 | Variable | Description |
 |----------|-------------|
 | `ANTHROPIC_API_KEY` | Your Anthropic API key for word generation |
-| `KV_REST_API_URL` | Auto-set when you link a KV database |
-| `KV_REST_API_TOKEN` | Auto-set when you link a KV database |
+| `UPSTASH_REDIS_REST_URL` *(or legacy `KV_REST_API_URL`)* | Auto-set when you add an Upstash Redis store |
+| `UPSTASH_REDIS_REST_TOKEN` *(or legacy `KV_REST_API_TOKEN`)* | Auto-set when you add an Upstash Redis store |
 
 To set via CLI:
 ```bash

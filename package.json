@@ -16,7 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "@anthropic-ai/sdk": "^0.71.2",
-    "@vercel/kv": "^3.0.0"
+    "@upstash/redis": "^1.38.0"
   },
   "devDependencies": {
     "@stryker-mutator/core": "^8.7.1",
