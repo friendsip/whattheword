@@ -135,14 +135,12 @@ In the Vercel dashboard (or CLI), set:
 
 | Variable | Description |
 |----------|-------------|
-| `ANTHROPIC_API_KEY` | Your Anthropic API key for word generation |
 | `UPSTASH_REDIS_REST_URL` *(or legacy `KV_REST_API_URL`)* | Auto-set when you add an Upstash Redis store |
 | `UPSTASH_REDIS_REST_TOKEN` *(or legacy `KV_REST_API_TOKEN`)* | Auto-set when you add an Upstash Redis store |
 
-To set via CLI:
-```bash
-vercel env add ANTHROPIC_API_KEY
-```
+> `ANTHROPIC_API_KEY` is **no longer required** — words come from the vetted
+> static packs in `lib/wordpacks.js` (July 2026). Remove the key from the
+> Vercel project and local `.env` files.
 
 ### Step 2: Deploy
 
@@ -164,7 +162,21 @@ field or `REACT_APP_API_URL` is needed — the client calls the API same-origin.
 **Option B — CLI.** From the repo root: `vercel` for a preview, `vercel --prod`
 for production.
 
-### Step 3: Verify
+### Step 3: The yourkids.com subdomain
+
+The game is part of yourkids.com and lives at **games.yourkids.com**:
+
+1. Vercel dashboard → this project (`wtw`) → **Settings → Domains** → add
+   `games.yourkids.com`.
+2. At the yourkids.com DNS host, add the CNAME Vercel shows (typically
+   `games` → `cname.vercel-dns.com`).
+3. Wait for the tick, then check `https://games.yourkids.com` serves the game.
+
+The main site links here from `/games` and the apps launcher, and the game's
+top bar links back to yourkids.com — keep both ends working when renaming
+anything.
+
+### Step 4: Verify
 
 1. Visit your deployment URL
 2. Create a test game

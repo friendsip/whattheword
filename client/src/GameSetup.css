@@ -10,7 +10,7 @@
 }
 
 .game-setup-container > h1 {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Baloo 2', sans-serif;
   font-weight: 800;
   font-size: 2.2rem;
   color: var(--accent-blue);
@@ -160,7 +160,7 @@
 .custom-wordlist textarea {
   min-height: 120px;
   resize: vertical;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Nunito Sans', sans-serif;
 }
 
 .custom-wordlist .word-count {
@@ -177,7 +177,7 @@
 
 .setup-label {
   display: block;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Baloo 2', sans-serif;
   font-weight: 700;
   font-size: 1rem;
   color: var(--text-primary);
@@ -464,7 +464,7 @@
 }
 
 .game-code-display .code-value {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Baloo 2', sans-serif;
   font-weight: 800;
   font-size: 2.5rem;
   letter-spacing: 8px;
@@ -734,7 +734,7 @@
 }
 
 .winner-announcement {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Baloo 2', sans-serif;
   font-weight: 700;
   font-size: 1.3rem;
   color: var(--accent-blue);

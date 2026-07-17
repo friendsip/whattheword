@@ -12,7 +12,7 @@
 }
 
 .spectator-container h1 {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Baloo 2', sans-serif;
   font-weight: 800;
   font-size: clamp(2rem, 4.5vw, 3.5rem);
   color: var(--accent-blue);
@@ -34,7 +34,7 @@
 }
 
 .spectator-status-heading {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Baloo 2', sans-serif;
   font-weight: 700;
   font-size: clamp(1.5rem, 3.5vw, 2.6rem);
   color: var(--text-primary);
@@ -49,7 +49,7 @@
 .spectator-code {
   color: var(--accent-blue);
   letter-spacing: 4px;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Baloo 2', sans-serif;
 }
 
 .spectator-round-label {
@@ -63,7 +63,7 @@
 }
 
 .spectator-timer {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Baloo 2', sans-serif;
   font-weight: 800;
   font-size: clamp(3.5rem, 9vw, 7rem);
   line-height: 1.1;
@@ -139,7 +139,7 @@
 }
 
 .spectator-points {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Baloo 2', sans-serif;
   font-weight: 800;
   font-size: clamp(1.4rem, 3.5vw, 2.8rem);
   color: var(--accent-blue);

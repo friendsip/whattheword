@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { pollDelay } from './pollDelay';
 import './Spectator.css';
 
 const API_URL = process.env.REACT_APP_API_URL || '';
 
 const TEAM_COLORS = [
-  '#6c5ce7', '#00b894', '#ff6b6b', '#ffd93d', '#0984e3',
-  '#e17055', '#00cec9', '#fd79a8', '#636e72', '#a29bfe',
+  '#D96A47', '#3A9E8F', '#8E6BAE', '#E0A32E', '#5D9FC7',
+  '#C25276', '#7BA05B', '#B65C38', '#6B6357', '#4C6E91',
 ];
 
 function Spectator() {
@@ -19,15 +20,27 @@ function Spectator() {
     try {
       const response = await axios.get(`${API_URL}/api/games/${gameId}`);
       setGameState(response.data);
+      return response.data;
     } catch (err) {
       setError('Game not found');
+      return null;
     }
   }, [gameId]);
 
+  // Adaptive poll: fast while play is live, relaxed otherwise (see pollDelay)
   useEffect(() => {
-    fetchGameState();
-    const interval = setInterval(fetchGameState, 1000);
-    return () => clearInterval(interval);
+    let timer;
+    let cancelled = false;
+    const loop = async () => {
+      const game = await fetchGameState();
+      if (cancelled) return;
+      timer = setTimeout(loop, pollDelay(game));
+    };
+    loop();
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
   }, [fetchGameState]);
 
   if (error) {

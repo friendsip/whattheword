@@ -4,30 +4,31 @@ import { QRCodeSVG } from 'qrcode.react';
 import confetti from 'canvas-confetti';
 import { useSound } from './hooks/useSound';
 import CategoryIcon from './CategoryIcon';
+import { pollDelay } from './pollDelay';
 import './GameSetup.css';
 
 const API_URL = process.env.REACT_APP_API_URL || '';
 
-// Preset categories shown as a tappable grid. Educational picks come first
-// so the classroom use is obvious; the party categories follow.
+// Preset categories shown as a tappable grid. Every category serves words
+// from the hand-vetted packs in lib/wordpacks.js — classroom-safe by design.
 const CATEGORY_OPTIONS = [
   { value: 'General', label: 'General', emoji: '🎲' },
-  { value: 'Shakespeare', label: 'Shakespeare', emoji: '🎭' },
-  { value: 'Science', label: 'Science', emoji: '🔬' },
   { value: 'Animals', label: 'Animals', emoji: '🐘' },
+  { value: 'Science', label: 'Science', emoji: '🔬' },
   { value: 'Geography', label: 'Geography', emoji: '🌍' },
-  { value: 'Movies', label: 'Movies', emoji: '🎬' },
-  { value: 'Pop Music', label: 'Pop Music', emoji: '🎵' },
+  { value: 'History', label: 'History', emoji: '🏛️' },
+  { value: 'Space', label: 'Space', emoji: '🚀' },
+  { value: 'Books & Stories', label: 'Books & Stories', emoji: '📚' },
+  { value: 'Sport & Games', label: 'Sport & Games', emoji: '⚽' },
+  { value: 'Food', label: 'Food', emoji: '🍎' },
+  { value: 'Music', label: 'Music', emoji: '🎵' },
+  { value: 'Nature & Outdoors', label: 'Nature', emoji: '🌳' },
   { value: 'Christmas', label: 'Christmas', emoji: '🎄' },
-  { value: 'Friends TV Show', label: 'Friends', emoji: '☕' },
-  { value: 'The Bible', label: 'The Bible', emoji: '📖' },
-  { value: 'US Politics', label: 'US Politics', emoji: '🇺🇸' },
-  { value: 'UK Politics', label: 'UK Politics', emoji: '🇬🇧' },
+  { value: 'Shakespeare', label: 'Shakespeare', emoji: '🎭' },
 ];
 
-// "Bring your own" options — a free-text topic or a hand-typed word list.
+// "Bring your own" — a hand-typed word list (this week's spelling list!).
 const CUSTOM_OPTIONS = [
-  { value: 'Custom', label: 'Custom Topic', emoji: '✏️' },
   { value: 'CustomList', label: 'Your Word List', emoji: '📝' },
 ];
 
@@ -38,8 +39,8 @@ const DIFFICULTY_HINTS = {
 };
 
 const TEAM_COLORS = [
-  '#6c5ce7', '#00b894', '#ff6b6b', '#ffd93d', '#0984e3',
-  '#e17055', '#00cec9', '#fd79a8', '#636e72', '#a29bfe',
+  '#D96A47', '#3A9E8F', '#8E6BAE', '#E0A32E', '#5D9FC7',
+  '#C25276', '#7BA05B', '#B65C38', '#6B6357', '#4C6E91',
 ];
 
 function GameSetup() {
@@ -47,7 +48,6 @@ function GameSetup() {
   const [numRounds, setNumRounds] = useState(2);
   const [roundDuration, setRoundDuration] = useState(30);
   const [genre, setGenre] = useState('General');
-  const [customGenre, setCustomGenre] = useState('');
   const [customWords, setCustomWords] = useState('');
   const [difficulty, setDifficulty] = useState('medium');
   const [teams, setTeams] = useState([
@@ -60,7 +60,6 @@ function GameSetup() {
   const [error, setError] = useState(null);
   const [showRules, setShowRules] = useState(false);
   const [restartGenre, setRestartGenre] = useState('General');
-  const [restartCustomGenre, setRestartCustomGenre] = useState('');
   const [celebrationFired, setCelebrationFired] = useState(false);
   const [inviteOpen, setInviteOpen] = useState(null); // null = auto (open until game starts)
   const { play, muted, toggleMute } = useSound();
@@ -104,12 +103,6 @@ function GameSetup() {
         }
         body.customWords = wordArray;
         body.genre = 'Custom Words';
-      } else if (genre === 'Custom') {
-        if (!customGenre.trim()) {
-          setError('Please enter a custom category.');
-          return;
-        }
-        body.genre = customGenre;
       } else {
         body.genre = genre;
       }
@@ -124,21 +117,32 @@ function GameSetup() {
   };
 
   const fetchGameState = useCallback(async () => {
-    if (!gameCode) return;
+    if (!gameCode) return null;
     try {
       const response = await axios.get(`${API_URL}/api/games/${gameCode}`);
       setGameState(response.data);
+      return response.data;
     } catch (err) {
       setError('Failed to fetch game state');
+      return null;
     }
   }, [gameCode]);
 
+  // Adaptive poll: fast while play is live, relaxed otherwise (see pollDelay)
   useEffect(() => {
-    if (gameCreated) {
-      fetchGameState();
-      const interval = setInterval(fetchGameState, 1000);
-      return () => clearInterval(interval);
-    }
+    if (!gameCreated) return;
+    let timer;
+    let cancelled = false;
+    const loop = async () => {
+      const game = await fetchGameState();
+      if (cancelled) return;
+      timer = setTimeout(loop, pollDelay(game));
+    };
+    loop();
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
   }, [gameCreated, fetchGameState]);
 
   // Games built on a custom word list default to replaying the same list
@@ -161,14 +165,14 @@ function GameSetup() {
           angle: 60,
           spread: 55,
           origin: { x: 0 },
-          colors: ['#6c5ce7', '#00b894', '#ffd93d', '#ff6b6b'],
+          colors: ['#D96A47', '#3A9E8F', '#E8B33C', '#8E6BAE'],
         });
         confetti({
           particleCount: 3,
           angle: 120,
           spread: 55,
           origin: { x: 1 },
-          colors: ['#6c5ce7', '#00b894', '#ffd93d', '#ff6b6b'],
+          colors: ['#D96A47', '#3A9E8F', '#E8B33C', '#8E6BAE'],
         });
         if (Date.now() < end) requestAnimationFrame(frame);
       };
@@ -230,9 +234,8 @@ function GameSetup() {
 
   const handleRestartGame = async () => {
     try {
-      const selectedGenre = restartGenre === 'Custom' ? restartCustomGenre : restartGenre;
       await axios.post(`${API_URL}/api/games/${gameCode}/restart`, {
-        genre: selectedGenre,
+        genre: restartGenre,
       });
       setCelebrationFired(false);
       fetchGameState();
@@ -340,22 +343,11 @@ function GameSetup() {
                     ? [{ value: 'Custom Words', label: 'Same Word List', emoji: '📝' }]
                     : []),
                   ...CATEGORY_OPTIONS,
-                  { value: 'Custom', label: 'Custom Topic', emoji: '✏️' },
                 ].map((g) => (
                   <option key={g.value} value={g.value}>{g.emoji} {g.label}</option>
                 ))}
               </select>
             </div>
-            {restartGenre === 'Custom' && (
-              <div className="restart-custom-genre">
-                <input
-                  type="text"
-                  value={restartCustomGenre}
-                  onChange={(e) => setRestartCustomGenre(e.target.value)}
-                  placeholder="Enter custom category..."
-                />
-              </div>
-            )}
             <button onClick={handleRestartGame} className="restart-button">
               New Game with Same Teams
             </button>
@@ -509,22 +501,9 @@ function GameSetup() {
               </div>
             </div>
 
-            {genre === 'Custom' && (
-              <div className="custom-genre">
-                <label htmlFor="customGenre">Enter your topic:</label>
-                <input
-                  type="text"
-                  id="customGenre"
-                  value={customGenre}
-                  onChange={(e) => setCustomGenre(e.target.value)}
-                  placeholder="e.g., Harry Potter, 80s Movies, Sports"
-                />
-              </div>
-            )}
-
             {genre === 'CustomList' && (
               <div className="custom-genre custom-wordlist">
-                <label htmlFor="customWords">Enter your words (one per line):</label>
+                <label htmlFor="customWords">Enter your words (one per line) — this week's spelling list works brilliantly:</label>
                 <textarea
                   id="customWords"
                   value={customWords}
@@ -619,6 +598,9 @@ function GameSetup() {
               </label>
             </div>
           ))}
+          <p className="team-name-hint">
+            Made-up team names work best — no need to use children's real names.
+          </p>
           <button type="submit">Create Game</button>
         </form>
       ) : (

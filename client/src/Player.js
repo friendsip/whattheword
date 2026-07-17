@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import confetti from 'canvas-confetti';
 import { useSound } from './hooks/useSound';
+import { pollDelay } from './pollDelay';
 import './Player.css';
 
 const API_URL = process.env.REACT_APP_API_URL || '';
@@ -47,15 +48,27 @@ function Player() {
         `/api/games/${gameId}/team/${teamIndex}`
       );
       setGameState(response.data);
+      return response.data;
     } catch (err) {
       setError('Failed to fetch game state.');
+      return null;
     }
   }, [gameId, teamIndex]);
 
+  // Adaptive poll: fast while play is live, relaxed otherwise (see pollDelay)
   useEffect(() => {
-    fetchGameState();
-    const interval = setInterval(fetchGameState, 1000);
-    return () => clearInterval(interval);
+    let timer;
+    let cancelled = false;
+    const loop = async () => {
+      const game = await fetchGameState();
+      if (cancelled) return;
+      timer = setTimeout(loop, pollDelay(game));
+    };
+    loop();
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
   }, [fetchGameState]);
 
   // Client-side timer from roundEndsAt for smooth countdown
@@ -146,7 +159,7 @@ function Player() {
         particleCount: 120,
         spread: 80,
         origin: { y: 0.6 },
-        colors: ['#6c5ce7', '#00b894', '#ffd93d', '#ff6b6b'],
+        colors: ['#D96A47', '#3A9E8F', '#E8B33C', '#8E6BAE'],
       });
     }
   }, [gameState.gameComplete, gameState.allTeams, gameState.score, play]);
@@ -221,7 +234,7 @@ function Player() {
 
   // Countdown colors
   const countdownColor = (n) => {
-    const colors = { 5: '#6c5ce7', 4: '#0984e3', 3: '#ffd93d', 2: '#ff9f43', 1: '#ff6b6b' };
+    const colors = { 5: '#3A9E8F', 4: '#5D9FC7', 3: '#E8B33C', 2: '#E8965A', 1: '#D64545' };
     return colors[n] || 'var(--accent-blue)';
   };
 
