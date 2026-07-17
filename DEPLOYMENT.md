@@ -42,21 +42,31 @@ wtw/
 │   ├── kv.js                         # Redis/KV database wrapper
 │   ├── game.js                       # Game logic (timers, state updates)
 │   └── words.js                      # Word generation with Claude AI
-├── client/                           # React frontend (unchanged)
+├── client/                           # React frontend (part of this repo)
 ├── vercel.json                       # Vercel configuration
 ├── package.json                      # Root dependencies
 └── CLAUDE.md                         # Developer reference
 ```
+
+> **Monorepo note:** `client/` used to be a separate Git repository referenced
+> as a submodule. It is now folded into this repo as ordinary files so the whole
+> app (API functions + client) deploys from a single push. The client's own
+> secrets (`client/.env*`) remain git-ignored and are never committed.
 
 ---
 
 ## Local Development
 
 ### Prerequisites
-- Node.js 18+
+- Node.js 22.x (matches the Vercel runtime pinned via `engines` in `package.json`)
 - npm
 - Vercel CLI (`npm i -g vercel`)
 - A Vercel account (free tier works)
+
+> **Tip:** To click through the UI without Vercel KV or an Anthropic key, you can
+> run the app against in-memory storage — build the client (`cd client && npm run
+> build`) and serve `client/build` alongside the `/api` handlers with a small
+> local server. This is only for UI/gameplay testing; real games need KV.
 
 ### Step 1: Install Dependencies
 
@@ -68,30 +78,29 @@ npm install
 cd client && npm install && cd ..
 ```
 
-### Step 2: Set Up Vercel KV for Local Development
+### Step 2: Set Up a Redis Store for Local Development
 
-You need a Vercel KV database even for local development:
+Game state lives in Redis. Vercel KV was sunset in 2024 and replaced by
+**Upstash Redis** on the Vercel Marketplace, so:
 
-1. Log in to Vercel CLI:
+1. Log in and link the project:
    ```bash
    vercel login
-   ```
-
-2. Link your project:
-   ```bash
    vercel link
    ```
 
-3. Create a KV database (if you haven't already):
-   ```bash
-   vercel kv create wtw-games
-   ```
-   Or create one in the Vercel dashboard under Storage → KV.
+2. In the Vercel dashboard, open your project → **Storage** → add
+   **Upstash for Redis** (Marketplace). This provisions the store and injects
+   its REST URL/token as environment variables.
 
-4. Pull environment variables to local:
+3. Pull them to local:
    ```bash
    vercel env pull .env.local
    ```
+
+`lib/kv.js` reads `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` and
+falls back to the legacy `KV_REST_API_URL` / `KV_REST_API_TOKEN` names, so
+either naming works with no code change.
 
 ### Step 3: Add Anthropic API Key
 
@@ -126,28 +135,48 @@ In the Vercel dashboard (or CLI), set:
 
 | Variable | Description |
 |----------|-------------|
-| `ANTHROPIC_API_KEY` | Your Anthropic API key for word generation |
-| `KV_REST_API_URL` | Auto-set when you link a KV database |
-| `KV_REST_API_TOKEN` | Auto-set when you link a KV database |
+| `UPSTASH_REDIS_REST_URL` *(or legacy `KV_REST_API_URL`)* | Auto-set when you add an Upstash Redis store |
+| `UPSTASH_REDIS_REST_TOKEN` *(or legacy `KV_REST_API_TOKEN`)* | Auto-set when you add an Upstash Redis store |
 
-To set via CLI:
-```bash
-vercel env add ANTHROPIC_API_KEY
-```
+> `ANTHROPIC_API_KEY` is **no longer required** — words come from the vetted
+> static packs in `lib/wordpacks.js` (July 2026). Remove the key from the
+> Vercel project and local `.env` files.
 
 ### Step 2: Deploy
 
-Preview deployment:
-```bash
-vercel
-```
+**Option A — Git-connected (recommended).** In the Vercel dashboard, import this
+repository (**Add New → Project → import the Git repo**). Vercel reads
+`vercel.json` automatically:
 
-Production deployment:
-```bash
-vercel --prod
-```
+- **Build command:** `cd client && npm install && npm run build`
+- **Output directory:** `client/build`
+- **Functions:** everything under `/api` is deployed as a serverless function
+- **Rewrites:** `/api/*` → functions; everything else → `/index.html` so the
+  React Router deep links (`/join/CODE`, `/game/CODE/team/0`, `/spectate`) and
+  page refreshes resolve instead of 404ing.
 
-### Step 3: Verify
+Once connected, every push to the production branch (`main`) triggers a
+production deploy; pushes to other branches get preview URLs. No `homepage`
+field or `REACT_APP_API_URL` is needed — the client calls the API same-origin.
+
+**Option B — CLI.** From the repo root: `vercel` for a preview, `vercel --prod`
+for production.
+
+### Step 3: The yourkids.com subdomain
+
+The game is part of yourkids.com and lives at **games.yourkids.com**:
+
+1. Vercel dashboard → this project (`wtw`) → **Settings → Domains** → add
+   `games.yourkids.com`.
+2. At the yourkids.com DNS host, add the CNAME Vercel shows (typically
+   `games` → `cname.vercel-dns.com`).
+3. Wait for the tick, then check `https://games.yourkids.com` serves the game.
+
+The main site links here from `/games` and the apps launcher, and the game's
+top bar links back to yourkids.com — keep both ends working when renaming
+anything.
+
+### Step 4: Verify
 
 1. Visit your deployment URL
 2. Create a test game
@@ -241,7 +270,7 @@ Since serverless functions can't use `setInterval`, game timing is handled diffe
 
 ### Local dev not connecting to KV
 - Run `vercel env pull .env.local` to get latest credentials
-- Ensure you're running `npm run dev` (not `npm start`)
+- `npm run dev` and `npm start` both launch `vercel dev`
 
 ### Deployment fails
 - Check Vercel build logs for errors

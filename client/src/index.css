@@ -1,0 +1,118 @@
+:root {
+  /* Light mode colors — YourKids "Warm & Playful" palette (matches
+     yourkids.com global.css: cream base, coral primary, teal secondary,
+     sand neutral). The old variable NAMES are kept (accent-blue is now
+     coral) so the component CSS doesn't need touching. */
+  --bg-primary: #FBF7EF;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #F3E9D8;
+  --bg-input: #ffffff;
+  --text-primary: #2E2921;
+  --text-secondary: #6B6357;
+  --border-color: #E4D9C4;
+  --shadow-color: rgba(90, 70, 40, 0.1);
+
+  --accent-blue: #D96A47; /* coral — primary actions & selection */
+  --accent-blue-hover: #C55A38;
+  --accent-green: #3A9E8F; /* teal — success / "Got it!" */
+  --accent-green-hover: #2E8A7C;
+  --accent-red: #D64545; /* warm red — skip / danger */
+  --accent-red-hover: #C13A3A;
+  --accent-yellow: #E8B33C;
+  --accent-orange: #E8965A;
+
+  /* Team colors — warm, distinct on cream and dark */
+  --team-1: #D96A47;
+  --team-2: #3A9E8F;
+  --team-3: #8E6BAE;
+  --team-4: #E0A32E;
+  --team-5: #5D9FC7;
+  --team-6: #C25276;
+  --team-7: #7BA05B;
+  --team-8: #B65C38;
+  --team-9: #6B6357;
+  --team-10: #4C6E91;
+
+  /* Spacing scale */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+
+  /* Border radius — pill-generous, like the main site */
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Warm dark — brown-black rather than blue-black, same accents
+       brightened a step for contrast */
+    --bg-primary: #211D18;
+    --bg-secondary: #2B2620;
+    --bg-tertiary: #363028;
+    --bg-input: #2B2620;
+    --text-primary: #F5EFE4;
+    --text-secondary: #B5AC9D;
+    --border-color: #4A4238;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+
+    --accent-blue: #E07B57;
+    --accent-blue-hover: #EC8D6B;
+    --accent-green: #4FB3A2;
+    --accent-green-hover: #5FC3B2;
+    --accent-red: #E56A5F;
+    --accent-red-hover: #EE7C71;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0 0 var(--space-md) 0;
+}
+
+button {
+  font-family: 'Nunito Sans', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+input, select {
+  font-family: 'Nunito Sans', sans-serif;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+a {
+  color: var(--accent-blue);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}

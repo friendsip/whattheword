@@ -1,0 +1,161 @@
+/* Spectator view is built for a projector: everything scales with the
+   viewport so it stays legible from the back of a room. */
+.spectator-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: clamp(var(--space-lg), 4vw, var(--space-2xl));
+  max-width: min(92vw, 1100px);
+  margin: 0 auto;
+}
+
+.spectator-container h1 {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 800;
+  font-size: clamp(2rem, 4.5vw, 3.5rem);
+  color: var(--accent-blue);
+  margin-bottom: clamp(var(--space-sm), 2vw, var(--space-lg));
+}
+
+.spectator-error {
+  background-color: var(--accent-red);
+  color: white;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+}
+
+/* ===== Status Block ===== */
+.spectator-status {
+  text-align: center;
+  margin-bottom: clamp(var(--space-lg), 3.5vw, var(--space-2xl));
+}
+
+.spectator-status-heading {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.5rem, 3.5vw, 2.6rem);
+  color: var(--text-primary);
+}
+
+.spectator-status-detail {
+  font-size: clamp(1.1rem, 2.2vw, 1.7rem);
+  color: var(--text-secondary);
+  margin-top: var(--space-xs);
+}
+
+.spectator-code {
+  color: var(--accent-blue);
+  letter-spacing: 4px;
+  font-family: 'Baloo 2', sans-serif;
+}
+
+.spectator-round-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  font-weight: 700;
+  font-size: clamp(1.1rem, 2.2vw, 1.7rem);
+  color: var(--text-secondary);
+}
+
+.spectator-timer {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 800;
+  font-size: clamp(3.5rem, 9vw, 7rem);
+  line-height: 1.1;
+  color: var(--accent-green);
+  font-variant-numeric: tabular-nums;
+}
+
+.spectator-timer.critical {
+  color: var(--accent-red);
+}
+
+.spectator-live-dot {
+  width: clamp(10px, 1.2vw, 16px);
+  height: clamp(10px, 1.2vw, 16px);
+  background-color: var(--accent-red);
+  border-radius: 50%;
+  animation: pulse-dot 1.5s ease-in-out infinite;
+}
+
+/* ===== Team Score Rows ===== */
+.spectator-scores {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(var(--space-md), 2vw, var(--space-lg));
+}
+
+.spectator-team {
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+  padding: clamp(var(--space-md), 2.5vw, var(--space-xl));
+  box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+.spectator-team-header {
+  display: flex;
+  align-items: center;
+  gap: clamp(var(--space-sm), 1.5vw, var(--space-md));
+  margin-bottom: var(--space-sm);
+}
+
+.spectator-rank {
+  flex-shrink: 0;
+  width: clamp(28px, 3.5vw, 48px);
+  height: clamp(28px, 3.5vw, 48px);
+  border-radius: 50%;
+  background-color: var(--bg-tertiary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: clamp(0.85rem, 1.8vw, 1.4rem);
+  color: var(--text-secondary);
+}
+
+.spectator-name {
+  flex: 1;
+  font-weight: 700;
+  font-size: clamp(1.1rem, 3vw, 2.2rem);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.spectator-round-count {
+  flex-shrink: 0;
+  background-color: var(--bg-tertiary);
+  color: var(--accent-green);
+  font-weight: 700;
+  font-size: clamp(0.8rem, 1.5vw, 1.2rem);
+  padding: var(--space-xs) var(--space-md);
+  border-radius: var(--radius-full);
+}
+
+.spectator-points {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.4rem, 3.5vw, 2.8rem);
+  color: var(--accent-blue);
+  font-variant-numeric: tabular-nums;
+}
+
+.spectator-bar {
+  height: clamp(10px, 1.5vw, 20px);
+  border-radius: var(--radius-full);
+  background-color: var(--border-color);
+  overflow: hidden;
+}
+
+.spectator-bar-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 0.5s ease;
+  min-width: 4px;
+}

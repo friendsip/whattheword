@@ -4,15 +4,19 @@
   "type": "module",
   "description": "What's the Word game",
   "scripts": {
+    "dev": "vercel dev",
     "start": "vercel dev",
+    "local": "node --import ./scripts/register-memory-kv.mjs scripts/local-server.mjs",
     "test": "vitest run",
     "test:watch": "vitest"
+  },
+  "engines": {
+    "node": "22.x"
   },
   "author": "Mark Trudinger",
   "license": "ISC",
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.71.2",
-    "@vercel/kv": "^3.0.0"
+    "@upstash/redis": "^1.38.0"
   },
   "devDependencies": {
     "@stryker-mutator/core": "^8.7.1",
